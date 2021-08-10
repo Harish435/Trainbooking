@@ -68,7 +68,11 @@ public class Passengers implements Serializable{
 		this.ticket = ticket;
 	}
 */
-	
-	
-	
+
+	public Passengers(Long passengerId, String passengerName, int age, Long userId) {
+		this.passengerId = passengerId;
+		this.passengerName = passengerName;
+		this.age = age;
+		this.userId = userId;
+	}
 }

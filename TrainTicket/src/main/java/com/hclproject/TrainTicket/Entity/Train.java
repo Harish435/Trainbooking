@@ -113,6 +113,14 @@ public class Train {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
+	public Train(Long trainId, int trainNumber, String trainName, String source, String destination, int availablSeats, Date date) {
+		this.trainId = trainId;
+		this.trainNumber = trainNumber;
+		this.trainName = trainName;
+		this.source = source;
+		this.destination = destination;
+		this.availablSeats = availablSeats;
+		this.date = date;
+	}
 }

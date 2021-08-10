@@ -24,6 +24,8 @@ public interface UserService {
 
 	List<TicketEntity> getallticketsbyid(Integer uid);
 
+	String Loginusers(String userName, String password);
+
 	
 	
 	

@@ -39,6 +39,11 @@ public class TrainServiceImpl implements TrainService {
 	
 	@Autowired
 	TicketService ticketservice;
+
+	public TrainServiceImpl(TrainRepository trainrepository) {
+		this.trainrepository = trainrepository;
+	}
+
 	/**
 	 * Used to save Train Entity
 	 * @param thetrain Entity of train

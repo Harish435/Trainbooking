@@ -109,7 +109,23 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
-	
+
+	public User(@NotNull(message = "First name is mandatory.") String userName, String passWord, @Email @NotEmpty String email, String phoneNumber, int age, String role) {
+		this.userName = userName;
+		this.passWord = passWord;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.age = age;
+		this.role = role;
+	}
+
+	public User(Long uid, @NotNull(message = "First name is mandatory.") String userName, String passWord, @Email @NotEmpty String email, String phoneNumber, int age, String role) {
+		this.uid = uid;
+		this.userName = userName;
+		this.passWord = passWord;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.age = age;
+		this.role = role;
+	}
 }

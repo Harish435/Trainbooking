@@ -24,8 +24,10 @@ import com.hclproject.TrainTicket.UserService.UserService;
 @Service
 public class TicketServiceImpl implements TicketService {
 
+	public TicketServiceImpl(TicketRepository ticketrepo) {
+		this.ticketrepo = ticketrepo;
+	}
 
-	
 	@Autowired
 	TicketRepository ticketrepo;
 	

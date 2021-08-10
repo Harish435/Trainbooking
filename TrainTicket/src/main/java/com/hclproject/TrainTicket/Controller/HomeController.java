@@ -78,4 +78,10 @@ public class HomeController {
 		userservice.deleteUser(uid);
 	}
 	
+	@GetMapping("/logins/{userName}/{password}")
+	private String Login(@RequestParam String userName,@RequestParam String password) {
+		return userservice.Loginusers(userName,password);
+		
+	}
+	
 }

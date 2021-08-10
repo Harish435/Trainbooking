@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.hclproject.TrainTicket.CustomException.UserNotFoundException;
 import com.hclproject.TrainTicket.CustomException.UseralreadyExist;
+import com.hclproject.TrainTicket.CustomException.userNotRegisterdException;
 import com.hclproject.TrainTicket.Entity.TicketEntity;
 import com.hclproject.TrainTicket.Entity.Train;
 import com.hclproject.TrainTicket.Entity.User;
@@ -29,6 +30,7 @@ import com.hclproject.TrainTicket.UserService.TicketService;
 import com.hclproject.TrainTicket.UserService.UserService;
 
 @Service
+
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -42,24 +44,27 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	TicketRepository ticketrepo;
-/**
+
+	public UserServiceImpl(Userrepository userrepo) {
+		this.userrepo = userrepo;
+	}
+
+	/**
  * used to save users
  * @param user argument of user entity
  * 
  * 
  * */
+
+
 	
 	@Override
 	public User saveusers(User user) {
-     List<User>u=getallusers();
-     String u1=null;
-		for (User user2 : u) {
-			u1=user2.getEmail();
-		}
-		if(u1.equals(user.getEmail())){
-			throw new UseralreadyExist("Email Already Exists!!!!");
-		}
-		return userrepo.save(user);
+     Optional<User> users=userrepo.findByEmail(user.getEmail());
+     if(users.isPresent()){
+     	throw  new UseralreadyExist("User Already Exist!!");
+	 }
+     return userrepo.save(user);
 	}
 	
 	/**
@@ -134,6 +139,15 @@ public class UserServiceImpl implements UserService {
 		return ticketrepo.findByUserId(uid);
 	
 	
+	}
+
+	@Override
+	public String Loginusers(String userName, String password) {
+		List<User> users= userrepo.findByUserNameAndPassWord(userName,password);
+		if(users.isEmpty()) {
+			throw new userNotRegisterdException("User Not Registered!!");
+		}
+		return "Login SuccesFul!";
 	}
 
 	

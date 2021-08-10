@@ -1,5 +1,6 @@
 package com.hclproject.TrainTicket.Entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +46,7 @@ public class TicketEntity {
 	@JoinColumn(name="p_fk",referencedColumnName="ticketId")
 	private List<Passengers> passengers;
 
-	public TicketEntity() {
-		
-	}
+
 
 	
 	
@@ -131,4 +130,14 @@ public class TicketEntity {
 		this.passengers = passengers;
 	}
 
+	public TicketEntity(int ticketId, int ticketNumber, int userId, double price, int trainId, String sfrom, String dto, List<Passengers> passengers) {
+		this.ticketId = ticketId;
+		this.ticketNumber = ticketNumber;
+		this.userId = userId;
+		this.price = price;
+		this.trainId = trainId;
+		Sfrom = sfrom;
+		Dto = dto;
+		this.passengers = passengers;
+	}
 }

@@ -26,6 +26,7 @@ import com.hclproject.TrainTicket.CustomException.NotaStringException;
 import com.hclproject.TrainTicket.CustomException.SeatNotValidException;
 import com.hclproject.TrainTicket.CustomException.UserNotFoundException;
 import com.hclproject.TrainTicket.CustomException.UseralreadyExist;
+import com.hclproject.TrainTicket.CustomException.userNotRegisterdException;
 
 @RestControllerAdvice
 public class UserRestExceptionHandler {
@@ -108,6 +109,19 @@ public class UserRestExceptionHandler {
 		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	@ExceptionHandler
+	public ResponseEntity<StringErrorResponse> handleException(userNotRegisterdException exc){
+		StringErrorResponse error=new StringErrorResponse();
+		
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(System.currentTimeMillis());
+		
+		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+		
+	}
+	
 	@ExceptionHandler
 	public ResponseEntity<StringErrorResponse> handleException(SeatNotValidException exc){
 		StringErrorResponse error=new StringErrorResponse();
