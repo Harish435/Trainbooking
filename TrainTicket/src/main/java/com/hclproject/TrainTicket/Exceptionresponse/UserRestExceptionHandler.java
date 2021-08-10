@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.hclproject.TrainTicket.CustomException.NotaStringException;
+import com.hclproject.TrainTicket.CustomException.SeatNotValidException;
 import com.hclproject.TrainTicket.CustomException.UserNotFoundException;
 import com.hclproject.TrainTicket.CustomException.UseralreadyExist;
 
@@ -107,5 +108,15 @@ public class UserRestExceptionHandler {
 		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 		
 	}
-	
+	@ExceptionHandler
+	public ResponseEntity<StringErrorResponse> handleException(SeatNotValidException exc){
+		StringErrorResponse error=new StringErrorResponse();
+		
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(System.currentTimeMillis());
+		
+		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+		
+	}
 }

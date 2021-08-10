@@ -40,7 +40,7 @@ public class Ticketcontroller {
 		
 	}*/
 	
-	@PostMapping("/bookticketsbyid")
+	@PostMapping()
 	public TicketEntity booktickets(@RequestParam int uid, @RequestParam int tainid,@RequestParam int notickets,@RequestBody TicketEntity tickets){
 		return ticketservice.bookById(uid,tainid,notickets,tickets);
 	}

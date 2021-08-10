@@ -44,36 +44,36 @@ public class HomeController {
 	 * @return returns user which is saved to db 
 	 * 
 	 * */
-	@PostMapping("/userRegister")
+	@PostMapping()
 	public User saveusers(@Valid @RequestBody User user){
 		return userservice.saveusers(user);
 	}
 	
 	
 	
-	@PutMapping("/update/{uid}")
+	@PutMapping("/{uid}")
 	public User updateusers(@PathVariable Long uid,@RequestBody User user){
 		return userservice.updateusers(uid, user);
 	}
 	
-	@GetMapping("/getByid/{uid}")
+	@GetMapping("/{uid}")
 	public User getUserbyid(@PathVariable Long uid){
 		
 		return userservice.getUserbyid(uid);
 	}
 	
-	@GetMapping("/gettransactonByid/{uid}")
+	@GetMapping("/{uid}/tickets")
 	public List<TicketEntity> getTicketrbyid(@RequestParam Integer uid){
 		
 		return userservice.getallticketsbyid(uid);
 	}
 	
-	@GetMapping("/getallusers")
+	@GetMapping()
 	public List<User> getall(){
 		return userservice.getallusers();
 	}
 	
-	@DeleteMapping("/delete/{uid}")
+	@DeleteMapping("/{uid}")
 	public void deleteuser(@PathVariable Long uid){
 		userservice.deleteUser(uid);
 	}

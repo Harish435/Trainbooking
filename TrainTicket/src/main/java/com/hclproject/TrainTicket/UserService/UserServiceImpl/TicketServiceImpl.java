@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.hclproject.TrainTicket.CustomException.SeatNotValidException;
 import com.hclproject.TrainTicket.CustomException.UserNotFoundException;
 import com.hclproject.TrainTicket.Entity.Passengers;
 import com.hclproject.TrainTicket.Entity.TicketEntity;
@@ -18,6 +19,7 @@ import com.hclproject.TrainTicket.UserRepository.TicketRepository;
 import com.hclproject.TrainTicket.UserRepository.TrainRepository;
 import com.hclproject.TrainTicket.UserService.TicketService;
 import com.hclproject.TrainTicket.UserService.TrainService;
+import com.hclproject.TrainTicket.UserService.UserService;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -32,6 +34,9 @@ public class TicketServiceImpl implements TicketService {
 	
 	@Autowired
 	TrainService trainservice;
+	
+	@Autowired
+	UserService userservice;
 	
 	
 	@Override
@@ -73,16 +78,31 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public TicketEntity bookById(int uid, int tainid, int notickets,
 			TicketEntity tickets) {
-		int cal=trainservice.getUserbyid((long) tainid).getAvailablSeats()-notickets;
-		//System.out.println("gggg"+cal);
-		trainservice.updatetrain((long) tainid).setAvailablSeats(cal);
-		tickets.setUserId(uid);
-		tickets.setTrainId(tainid);
-		List<Passengers>p=tickets.getPassengers();
-		for (Passengers passengers : p) {
-			passengers.setUserId((long) uid);
+		Train train=trainservice.getUserbyid((long) tainid);
+		//User user=userservice.getUserbyid((long) uid);
+		
+		if(train!=null) {
+			int availableSeats=	train.getAvailablSeats();
+			int cal=trainservice.getUserbyid((long) tainid).getAvailablSeats()-notickets;
+			//System.out.println("gggg"+cal);
+			if(notickets <= 0 || notickets > availableSeats) {
+				throw new SeatNotValidException("Please Enter Valid Number of Seats");
+			}else {
+				trainservice.updatetrain((long) tainid).setAvailablSeats(cal);
+				tickets.setUserId(uid);
+				tickets.setTrainId(tainid);
+				tickets.setDto(trainservice.getUserbyid((long) tainid).getDestination());
+				tickets.setSfrom(trainservice.getUserbyid((long) tainid).getSource());
+				List<Passengers>p=tickets.getPassengers();
+				for (Passengers passengers : p) {
+					passengers.setUserId((long) uid);
+				}
+			}
+			return ticketrepo.save(tickets);
 		}
-		return ticketrepo.save(tickets);
+		System.out.println("error");
+		return null;
+		
 	}
 
 }
